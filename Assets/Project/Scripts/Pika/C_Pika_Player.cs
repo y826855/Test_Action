@@ -22,16 +22,20 @@ public class C_Pika_Player : MonoBehaviour, IPikaMover
     [Header("-----------------------------")]
     [SerializeField] float m_CurrGrav = 0f;
     [SerializeField] float m_GravAcc = 1f;
+    [SerializeField] float m_GravAcc_Def = 1.1f;
+    [SerializeField] float m_GravAcc_Max = -12f;
     [SerializeField] float m_GravAccPow = 1.1f;
 
     [Header("-----------------------------")]
     [SerializeField] bool m_IsSpike = false;
     [SerializeField] float m_SpikePower = 3f;
 
+
+    //입력. 이동
     public void OnMove(InputAction.CallbackContext context)
     { m_Move = context.ReadValue<Vector2>(); }
 
-    //회피
+    //입력. 스파이크, 회피
     public void OnDodge(InputAction.CallbackContext context)
     {
         switch (context.phase) 
@@ -45,13 +49,11 @@ public class C_Pika_Player : MonoBehaviour, IPikaMover
 
     
 
-    //점프. 누른 시간 반영해서 낮점 구현?
+    //점프. 사용안함.
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-        {
-            Debug.Log("jump");
-        }
+        { Debug.Log("jump"); }
     }
 
 
@@ -79,20 +81,21 @@ public class C_Pika_Player : MonoBehaviour, IPikaMover
     {
         if (_dir == Vector2.zero) return;
 
+        //방향 위로 두면 점프
         if (_dir.y > 0) Jump();
 
-        //한계점 지정
+        //이동할 위치
         var move = _dir.x * Time.deltaTime * m_MoveSpeed * Vector3.right;
 
         Vector3 res = Vector3.zero;
 
+        //왼쪽 캐릭터 이동 한계 지정
         if (m_IsLeft == true)
             res = CGameManager_Pika.Instance.m_GameArea.Check_LeftArea(this.transform.localPosition + move);
-        else
+        else //우측 캐릭터 이동 한계 지정
             res = CGameManager_Pika.Instance.m_GameArea.Check_RightArea(this.transform.localPosition + move);
 
         this.transform.localPosition = res;
-
     }
 
     //애니메이션 가중치 감소량 보간
@@ -152,8 +155,12 @@ public class C_Pika_Player : MonoBehaviour, IPikaMover
         var grav = m_CurrGrav * Time.deltaTime * Vector3.down;
 
         //가속도 계산
+        //m_GravAcc += m_GravAcc * m_GravAccPow * Time.deltaTime;
+        //m_CurrGrav += m_GravAcc;
+
         m_GravAcc += m_GravAcc * m_GravAccPow * Time.deltaTime;
-        m_CurrGrav += m_GravAcc;
+        if (m_GravAcc > m_GravAcc_Max) m_GravAcc = m_GravAcc_Max;
+        m_CurrGrav += m_GravAcc * Time.deltaTime; // 중력 가속도에 시간의 영향을 반영
 
         var res = this.transform.localPosition + grav;
 
@@ -162,33 +169,35 @@ public class C_Pika_Player : MonoBehaviour, IPikaMover
         {
             res.y = 0;
             m_CurrGrav = 0;
-            m_GravAcc = 1.1f;
+            m_GravAcc = m_GravAcc_Def;
         }
 
         this.transform.localPosition = res;
     }
 
     //사용 안함
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag != "Ball") return;
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.tag != "Ball") return;
+    //    //despike spike 합치기 
+    //}
 
-        //despike spike 합치기 
-    }
-
+    //충돌 체크
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //공과 충돌만 체크
         if (collision.gameObject.tag != "Ball") return;
 
+        
         var ball = CGameManager_Pika.Instance.m_GameArea.m_Ball;
         if (m_IsSpike == true)
-        {
+        {//스파이크 on
             Debug.Log("Spike");
             ball.ActiveSpike(m_SpikePower);
         }
 
         else
-        {
+        {//스파이크 off
             Debug.Log("DeSpike");
             ball.DeactiveSpike();
         }

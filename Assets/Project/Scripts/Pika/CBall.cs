@@ -79,6 +79,7 @@ public class CBall : MonoBehaviour
     //공이 땅에 닿음
     public void BallTouchGround() 
     {
+        //y 축 속도 유지시킴
         m_Rigid.linearVelocityY = m_Speed;
     }
 
@@ -89,7 +90,8 @@ public class CBall : MonoBehaviour
 
     public LayerMask m_LayerMask;
 
-
+    #region 사용안함
+    ///----------------------------------------------------------------///
     //더이상 안씀
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -140,4 +142,6 @@ public class CBall : MonoBehaviour
         Vector3 refl = Vector2.Reflect(inDir, inNormal);
         Gizmos.DrawLine(hitPoint + refl, hitPoint);
     }
+    ///----------------------------------------------------------------///
+    #endregion
 }

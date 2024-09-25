@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class CArea : MonoBehaviour
 {
-    //TODO : 그냥 vector2 2개로 바꾸자...
+    //맵 사이즈
     [SerializeField] Vector2 m_SizeX = Vector2.zero;
     [SerializeField] Vector2 m_SizeY = Vector2.zero;
 
     [SerializeField] Transform m_PlayerL = null;
     [SerializeField] Transform m_PlayerR = null;
 
+    //네트 두께
     [SerializeField] float m_NetThick = 0.4f;
 
     public CBall m_Ball = null;
@@ -16,6 +17,7 @@ public class CArea : MonoBehaviour
 
     private void Awake()
     {
+        //임의로 싱글톤에 올려둠
         CGameManager_Pika.Instance.m_GameArea = this;
     }
 
@@ -51,7 +53,7 @@ public class CArea : MonoBehaviour
         if (m_SizeY.x + _radius > pos.y )//아래
         { 
             _ball.linearVelocityY *= -1; pos.y = m_SizeY.x + _radius;
-            BallTouchGroud();
+            BallTouchGroud(); // 땅에 닿음체크
         }
         else if (m_SizeY.y - _radius < pos.y )//위
         { _ball.linearVelocityY *= -1; pos.y = m_SizeY.y - _radius; }
@@ -63,7 +65,7 @@ public class CArea : MonoBehaviour
     public void BallTouchGroud() 
     {
         Debug.Log("Ball Touch the Ground");
-        
+        m_Ball.BallTouchGround();
     }
 
     private void OnDrawGizmos()

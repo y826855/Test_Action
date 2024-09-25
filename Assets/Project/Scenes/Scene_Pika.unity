@@ -1088,11 +1088,13 @@ MonoBehaviour:
   m_MoveLerp: {x: 0, y: 0}
   lerpSpeed: 20
   m_MoveSpeed: 6
-  m_JumpPower: 20
+  m_JumpPower: 8
   m_SmashPower: 2
   m_CurrGrav: 0
-  m_GravAcc: 1.01
-  m_GravAccPow: 1.005
+  m_GravAcc: 5
+  m_GravAcc_Def: 5
+  m_GravAcc_Max: 40
+  m_GravAccPow: 4
   m_IsSpike: 0
   m_SpikePower: 10
 --- !u!58 &690308720
@@ -1184,11 +1186,13 @@ MonoBehaviour:
   m_MoveLerp: {x: 0, y: 0}
   lerpSpeed: 20
   m_MoveSpeed: 6
-  m_JumpPower: 20
+  m_JumpPower: 8
   m_SmashPower: 2
   m_CurrGrav: 0
-  m_GravAcc: 1.01
-  m_GravAccPow: 1.005
+  m_GravAcc: 5
+  m_GravAcc_Def: 5
+  m_GravAcc_Max: 40
+  m_GravAccPow: 4
   m_IsSpike: 0
   m_SpikePower: 3
 --- !u!114 &840737702
