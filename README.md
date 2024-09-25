@@ -3,3 +3,5 @@
 EXE 링크 [EXE](https://drive.google.com/file/d/1Ij__l3iOgvmHharWAquj-Kdw7ZbNO7EM/view?usp=drive_link)
 
 유튜브 [Youtube](https://www.youtube.com/watch?v=Cglx3zCZsIw)
+
+PIKA 시뮬레이터의 코드들 [Link](https://github.com/y826855/Test_Action/tree/main/Assets/Project/Scripts/Pika)
