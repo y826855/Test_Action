@@ -1,0 +1,33 @@
+발이 닿을때만 check
+
+캐릭터의 최종 위치는 캡슐 콜라이더임.
+
+Model은 그저 캡슐콜라이더를 최대한 따라오려 노력할 뿐.
+
+
+ik 헬퍼와 ik 직시할 transform 2개 존재함.
+
+이번에 참조한 IK의 기능에 그래프 형태로 애니메이션 발 움직임 보는게 있음.
+애니메이션 마다 움직이는 키 프레임 저장해두나?? 너무 비효율적인거같음..
+
+방법을 찾아보자
+
+
+
+0914
+일단 가만히 있을때의 IK를 구현해 보았다.
+
+goal 위치(발위치 2개)의 중앙값이 body가 존제할 위치이다.
+
+한쪽발이 연속으로 체크중, 범위 밖을 벗어나면 덜덜 거리며 위아래로 범위를 벗어난 캐스팅을함.
+(레이캐스트에서 둘의 높이가 일정 이상일때 체크 해야할듯)
+
+
+//20240922
+뭘 할까?
+리소스 서칭하면서 IK 한번더 보기
+https://assetstore.unity.com/packages/tools/animation/ju-foot-placement-advanced-foot-placement-ik-system-190995
+https://assetstore.unity.com/packages/tools/animation/homebrew-foot-ik-220358
+https://assetstore.unity.com/packages/tools/animation/ropofoo-foot-controller-ik-237606
+
+참조할만한 게임 시스템 찾아보기
